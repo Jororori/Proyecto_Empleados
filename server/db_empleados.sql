@@ -10,3 +10,18 @@ CREATE TABLE IF NOT EXISTS `empleado` (
   `correo` varchar(150) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+CREATE TABLE IF NOT EXISTS `proyectos` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `nombre_proyecto` varchar(100) NOT NULL,
+  `descripcion` text,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+CREATE TABLE IF NOT EXISTS `empleado_proyecto` (
+  `empleado_id` int(11) NOT NULL,
+  `proyecto_id` int(11) NOT NULL,
+  PRIMARY KEY (`empleado_id`, `proyecto_id`),
+  CONSTRAINT `fk_ep_empleado` FOREIGN KEY (`empleado_id`) REFERENCES `empleado` (`id`) ON DELETE CASCADE,
+  CONSTRAINT `fk_ep_proyecto` FOREIGN KEY (`proyecto_id`) REFERENCES `proyectos` (`id`) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
