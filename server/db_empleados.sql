@@ -25,3 +25,12 @@ CREATE TABLE IF NOT EXISTS `empleado_proyecto` (
   CONSTRAINT `fk_ep_empleado` FOREIGN KEY (`empleado_id`) REFERENCES `empleado` (`id`) ON DELETE CASCADE,
   CONSTRAINT `fk_ep_proyecto` FOREIGN KEY (`proyecto_id`) REFERENCES `proyectos` (`id`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+CREATE TABLE IF NOT EXISTS `salario` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `empleado_id` int(11) NOT NULL,
+  `monto` decimal(10,2) NOT NULL,
+  `fecha_actualizacion` date NOT NULL,
+  PRIMARY KEY (`id`),
+  CONSTRAINT `fk_salario_empleado` FOREIGN KEY (`empleado_id`) REFERENCES `empleado` (`id`) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
