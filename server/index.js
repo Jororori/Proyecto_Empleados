@@ -26,6 +26,27 @@ db.getConnection((err, connection) => {
     }
 });
 
+app.post("/create", (req, res) => {
+    const nombre = req.body.nombre;
+    const edad = req.body.edad;
+    const pais = req.body.pais;
+    const cargo = req.body.cargo;
+    const correo = req.body.correo;
+
+    db.query(
+        'INSERT INTO empleado(nombre,edad,pais,cargo,correo) VALUES(?,?,?,?,?)',
+        [nombre, edad, pais, cargo, correo],
+        (err, result) => {
+            if (err) {
+                console.log(err);
+                res.status(500).send(err);
+            } else {
+                res.send("Empleado registrado con exito!!");
+            }
+        }
+    );
+});
+
 app.listen(3001, () => {
     console.log("corriendo el puerto 3001");
 });
