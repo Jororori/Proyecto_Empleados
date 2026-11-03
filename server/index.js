@@ -47,6 +47,17 @@ app.post("/create", (req, res) => {
     );
 });
 
+app.get("/empleados", (req, res) => {
+    db.query('SELECT * FROM empleado ORDER BY id ASC', (err, result) => {
+        if (err) {
+            console.log(err);
+            res.status(500).send(err);
+        } else {
+            res.send(result);
+        }
+    });
+});
+
 app.listen(3001, () => {
     console.log("corriendo el puerto 3001");
 });
