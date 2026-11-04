@@ -80,6 +80,19 @@ app.put("/update", (req, res) => {
     );
 });
 
+app.delete("/delete/:id", (req, res) => {
+    const id = req.params.id;
+
+    db.query('DELETE FROM empleado WHERE id=?', [id], (err, result) => {
+        if (err) {
+            console.log(err);
+            res.status(500).send(err);
+        } else {
+            res.send(result);
+        }
+    });
+});
+
 app.listen(3001, () => {
     console.log("corriendo el puerto 3001");
 });
