@@ -93,6 +93,29 @@ app.delete("/delete/:id", (req, res) => {
     });
 });
 
+app.get("/proyectos", (req, res) => {
+    db.query('SELECT * FROM proyectos ORDER BY id ASC', (err, result) => {
+        if (err) return res.status(500).send(err);
+        res.send(result);
+    });
+});
+
+app.post("/proyectos/create", (req, res) => {
+    const { nombre_proyecto, descripcion } = req.body;
+    db.query('INSERT INTO proyectos(nombre_proyecto, descripcion) VALUES(?, ?)', [nombre_proyecto, descripcion], (err, result) => {
+        if (err) return res.status(500).send(err);
+        res.send("Proyecto registrado con éxito!");
+    });
+});
+
+app.delete("/proyectos/delete/:id", (req, res) => {
+    const id = req.params.id;
+    db.query('DELETE FROM proyectos WHERE id=?', [id], (err, result) => {
+        if (err) return res.status(500).send(err);
+        res.send(result);
+    });
+});
+
 app.listen(3001, () => {
     console.log("corriendo el puerto 3001");
 });
