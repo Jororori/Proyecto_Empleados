@@ -116,6 +116,31 @@ app.delete("/proyectos/delete/:id", (req, res) => {
     });
 });
 
+app.get("/salarios", (req, res) => {
+    const sql = `
+        SELECT s.*, e.nombre AS empleado_nombre, e.cargo 
+        FROM salario s 
+        JOIN empleado e ON s.empleado_id = e.id 
+        ORDER BY s.fecha_actualizacion DESC
+    `;
+    db.query(sql, (err, result) => {
+        if (err) return res.status(500).send(err);
+        res.send(result);
+    });
+});
+
+app.post("/salarios/create", (req, res) => {
+    const { empleado_id, monto, fecha_actualizacion } = req.body;
+    db.query(
+        'INSERT INTO salario(empleado_id, monto, fecha_actualizacion) VALUES(?, ?, ?)',
+        [empleado_id, monto, fecha_actualizacion],
+        (err, result) => {
+            if (err) return res.status(500).send(err);
+            res.send("Salario registrado con éxito!");
+        }
+    );
+});
+
 app.listen(3001, () => {
     console.log("corriendo el puerto 3001");
 });
