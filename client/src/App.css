@@ -6,6 +6,14 @@
   margin-bottom: 50px;
 }
 
+.datos {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: 100%;
+  align-items: center;
+}
+
 .card {
   margin-bottom: 25px;
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
@@ -20,4 +28,14 @@
 .input-group-text {
   min-width: 110px;
   font-weight: 500;
+}
+
+.table th {
+  background-color: #212529;
+  color: white;
+}
+
+.nav-tabs .nav-link {
+  font-weight: 600;
+  cursor: pointer;
 }
