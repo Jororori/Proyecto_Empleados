@@ -141,6 +141,43 @@ app.post("/salarios/create", (req, res) => {
     );
 });
 
+app.get("/empleado-proyectos", (req, res) => {
+    const sql = `
+        SELECT ep.empleado_id, ep.proyecto_id, e.nombre AS empleado_nombre, e.cargo, p.nombre_proyecto 
+        FROM empleado_proyecto ep
+        JOIN empleado e ON ep.empleado_id = e.id
+        JOIN proyectos p ON ep.proyecto_id = p.id
+    `;
+    db.query(sql, (err, result) => {
+        if (err) return res.status(500).send(err);
+        res.send(result);
+    });
+});
+
+app.post("/empleado-proyectos/create", (req, res) => {
+    const { empleado_id, proyecto_id } = req.body;
+    db.query(
+        'INSERT INTO empleado_proyecto(empleado_id, proyecto_id) VALUES(?, ?)',
+        [empleado_id, proyecto_id],
+        (err, result) => {
+            if (err) return res.status(500).send(err);
+            res.send("Empleado asignado al proyecto exitosamente!");
+        }
+    );
+});
+
+app.post("/empleado-proyectos/delete", (req, res) => {
+    const { empleado_id, proyecto_id } = req.body;
+    db.query(
+        'DELETE FROM empleado_proyecto WHERE empleado_id=? AND proyecto_id=?',
+        [empleado_id, proyecto_id],
+        (err, result) => {
+            if (err) return res.status(500).send(err);
+            res.send(result);
+        }
+    );
+});
+
 app.listen(3001, () => {
     console.log("corriendo el puerto 3001");
 });
